@@ -10,6 +10,10 @@ namespace gameLogic
     private float timer;
     public int countGames;
     bool flag;
+    public bool win = true;
+    public Animator transition_win;
+    public Animator transition_lose;
+    public float transTime = 1.0f;
 
     void Start()
     {
@@ -39,15 +43,28 @@ namespace gameLogic
         while(startGame.gameStates[scene] == 0){
           if(startGame.lifeFlag == 1){
             --startGame.lives;
+            win = false;
             startGame.lifeFlag = 0;
+          }else{
+            win = true;
           }
           startGame.gamesPlayed++; //increment number of games played
           startGame.gameStates[scene] = 1;
           flag = false;
           break;
         }
+     
       }
-      SceneManager.LoadScene(scene); //load random scene
+      //transition_win.SetTrigger("gameWon");
+      //StartCoroutine(LoadLevel());
+      SceneManager.LoadScene(scene);
+    }
+
+
+    IEnumerator LoadLevel()
+    {
+        yield return new WaitForSeconds(transTime);
+        //SceneManager.LoadScene(index);
     }
 
     private void EndGame()
