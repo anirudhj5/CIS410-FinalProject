@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 namespace gameLogic
 {
-  public class startGame : MonoBehaviour
+  public class StartGame : MonoBehaviour
   {
     public static int gamesPlayed;
     public static int[] gameStates = new int[10]; //if gameStates[Scene index] = 0 game not played if 1 game has been played
@@ -32,7 +32,7 @@ namespace gameLogic
     public void LoadScene()
     {
       int scene = Random.Range(1, countGames); //random game index
-      startGame.gameStates[scene] = 1; //set game to played in gameStates
+      StartGame.gameStates[scene] = 1; //set game to played in gameStates
       SceneManager.LoadScene(scene); //load random game
     }
   }

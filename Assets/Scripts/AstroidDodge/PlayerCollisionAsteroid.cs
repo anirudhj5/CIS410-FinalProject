@@ -4,21 +4,21 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using TMPro;
-using static gameLogic.randomSceneLoader;
+using static gameLogic.RandomSceneLoader;
 
 namespace gameLogic
 {
   public class PlayerCollisionAsteroid : MonoBehaviour
   {
-    private int flag = 0; //collider triggers twice at start
     private int oneFlag = 1;
     public GameObject instrText;
-    randomSceneLoader randomSceneLoader;
+    RandomSceneLoader RandomSceneLoader;
+    public Animator animator;
 
     void Awake()
     {
-      randomSceneLoader = gameObject.AddComponent<randomSceneLoader>();
-      startGame.lifeFlag = 0;
+      RandomSceneLoader = gameObject.AddComponent<RandomSceneLoader>();
+      StartGame.lifeFlag = 0;
     }
 
     void Update()
@@ -31,20 +31,30 @@ namespace gameLogic
 
     private void OnTriggerEnter(Collider other)
     {
-      if (flag > 1){ //collides twice on start
-        if(oneFlag == 1){
-        startGame.lifeFlag = 1;
-        randomSceneLoader.LoadRandomScene();
+      if(other.gameObject.name == "Asteroid(Clone)")
+      {
+        Debug.Log("hit");
+        if(oneFlag == 1)
+        {
         oneFlag = 0;
+        animator.SetTrigger("Explode");
+        StartCoroutine(Wait());
         }
       }
-      flag++; //collides twice on start
     }
 
     IEnumerator HideText()
     {
       yield return new WaitForSeconds(1.5f);
       instrText.SetActive(false);
+    }
+
+    IEnumerator Wait()
+    {
+      yield return new WaitForSeconds(.8f);
+      StartGame.lifeFlag = 1;
+      RandomSceneLoader.LoadRandomScene();
+
     }
   }
 }

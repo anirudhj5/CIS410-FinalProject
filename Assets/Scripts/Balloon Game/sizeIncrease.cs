@@ -7,18 +7,18 @@ using UnityEngine.SceneManagement;
 
 namespace gameLogic
 {
-  public class sizeIncrease : MonoBehaviour
+  public class SizeIncrease : MonoBehaviour
   {
     public GameObject balloon;
     public GameObject instrText;
     private float pop = 0;
-    randomSceneLoader randomSceneLoader;
+    RandomSceneLoader RandomSceneLoader;
 
       void Awake()
       {
           Debug.Log("balloon");
-          randomSceneLoader = gameObject.AddComponent<randomSceneLoader>();
-          startGame.lifeFlag = 1;
+          RandomSceneLoader = gameObject.AddComponent<RandomSceneLoader>();
+          StartGame.lifeFlag = 1;
       }
 
       void OnSceneLoaded()
@@ -36,8 +36,8 @@ namespace gameLogic
             balloon.transform.localScale += new Vector3(scale, scale, scale);//scale balloon by random scale
             if(pop > 4.7f){ //if total scale > 4.8
               balloon.SetActive(false); //hide balloon aka pop
-              startGame.lifeFlag = 0;
-              randomSceneLoader.LoadRandomScene();
+              StartGame.lifeFlag = 0;
+              RandomSceneLoader.LoadRandomScene();
               return;
             }
           }

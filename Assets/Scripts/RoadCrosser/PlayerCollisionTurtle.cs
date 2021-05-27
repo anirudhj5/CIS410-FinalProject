@@ -13,12 +13,12 @@ namespace gameLogic{
     public GameObject instrText;
     private int flag = 0; //collides twice on start
     private int oneFlag = 1;
-    randomSceneLoader randomSceneLoader;
+    RandomSceneLoader RandomSceneLoader;
 
     void Awake()
     {
-      startGame.lifeFlag = 1; //if time runs out lose a life
-      randomSceneLoader = gameObject.AddComponent<randomSceneLoader>();
+      StartGame.lifeFlag = 1; //if time runs out lose a life
+      RandomSceneLoader = gameObject.AddComponent<RandomSceneLoader>();
     }
 
     void Update()
@@ -38,8 +38,8 @@ namespace gameLogic{
     {
       if (flag > 1){ //collides twice on start
         if(oneFlag == 1){
-        startGame.lifeFlag = 1;
-        randomSceneLoader.LoadRandomScene();
+        StartGame.lifeFlag = 1;
+        RandomSceneLoader.LoadRandomScene();
         oneFlag = 0;
         }
       }

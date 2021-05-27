@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 using TMPro;
 using UnityEngine.SceneManagement;
 
@@ -9,10 +10,13 @@ namespace gameLogic
 
 		public float speed;
 	  public InputAction ad;
-		private bool rotateFlag = true;
+		public GameObject laser;
+		private bool fire = true;
+		private bool moveLock = false;
 
 	  public CharacterController controller;
 		private Rigidbody rb;
+		private Rigidbody rbLaser;
 
 	  void Start()
 	  {
@@ -25,16 +29,46 @@ namespace gameLogic
 	  {
 	    Vector2 inputVector = ad.ReadValue<Vector2>(); //input vector
 
-			if(Keyboard.current.dKey.wasPressedThisFrame && rotateFlag){ //if d is pressed and facing left
-	      rb.transform.Rotate(new Vector3(0f, 180f, 0f)); //face right
-				rotateFlag = false; //if false player facing right
+			if(Keyboard.current.dKey.wasPressedThisFrame)
+			{ //if d is pressed and facing left
+	      rb.transform.eulerAngles = new Vector3(180f,-5f,0f); //face right
 	    }
-			if(Keyboard.current.aKey.wasPressedThisFrame && !rotateFlag){ //if d is pressed and facing right
-	      rb.transform.Rotate(new Vector3(0f, 180f, 0f)); //face left
-				rotateFlag = true; //if false player facing left
+			if(Keyboard.current.aKey.wasPressedThisFrame)
+			{ //if d is pressed and facing right
+	      rb.transform.eulerAngles = new Vector3(180f,5f,0f); //face left
 	    }
-	    controller.Move(new Vector3(inputVector.x, 0f, 0f) * Time.deltaTime * speed); //move player
+
+			if(moveLock)
+			{
+				controller.Move(new Vector3(inputVector.x, 0f, 0f) * Time.deltaTime * speed); //move player
+				if(Keyboard.current.spaceKey.wasPressedThisFrame && fire)
+				{ //if d is pressed and facing left
+					fire = false;
+					Fire_Laser();
+				}
+			}
+
 	  }
+
+		void Fire_Laser()
+		{
+			GameObject Laser = Instantiate(laser) as GameObject;
+			rbLaser = Laser.GetComponent<Rigidbody>();
+			rbLaser.transform.position = new Vector3(rb.transform.position.x, 8f, 0f);
+			StartCoroutine(Laser_Cooldown());
+		}
+
+		IEnumerator Laser_Cooldown()
+		{
+			 yield return new WaitForSeconds(1);
+			 fire = true;
+			 Debug.Log("fire recharge");
+		}
+
+		private void OnTriggerEnter(Collider other)
+		{
+			moveLock = true;
+		}
 
 		void OnEnable()
 	  {

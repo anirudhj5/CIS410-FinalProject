@@ -5,12 +5,12 @@ using UnityEngine.SceneManagement;
 using TMPro;
 
 namespace gameLogic{
-  public class uiText : MonoBehaviour
+  public class UIText : MonoBehaviour
   {
       private float time;
       bool flag;
       public TextMeshProUGUI timeText;
-      randomSceneLoader randomSceneLoader;
+      RandomSceneLoader RandomSceneLoader;
       int countGames;
 
       void Start()
@@ -18,7 +18,7 @@ namespace gameLogic{
           flag = true;
           time = 11;
           timeText.text =  "" + ((int)time); //set time in UI
-          randomSceneLoader = gameObject.AddComponent<randomSceneLoader>();
+          RandomSceneLoader = gameObject.AddComponent<RandomSceneLoader>();
           countGames = SceneManager.sceneCountInBuildSettings -1;
       }
 
@@ -31,7 +31,7 @@ namespace gameLogic{
             if (flag)
             {
               flag = false;
-              randomSceneLoader.LoadRandomScene();
+              RandomSceneLoader.LoadRandomScene();
             }
           }
       }

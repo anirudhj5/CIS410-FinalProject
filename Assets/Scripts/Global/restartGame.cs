@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 namespace gameLogic
 {
-  public class restartGame : MonoBehaviour
+  public class RestartGame : MonoBehaviour
   {
     public void LoadScene()
     {

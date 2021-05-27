@@ -5,15 +5,11 @@ using UnityEngine.SceneManagement;
 
 namespace gameLogic
 {
-  public class randomSceneLoader : MonoBehaviour
+  public class RandomSceneLoader : MonoBehaviour
   {
     private float timer;
     public int countGames;
     bool flag;
-    public bool win = true;
-    public Animator transition_win;
-    public Animator transition_lose;
-    public float transTime = 1.0f;
 
     void Start()
     {
@@ -23,14 +19,14 @@ namespace gameLogic
     //will load a random unplayed scene
     public void LoadRandomScene()
     {
-      Debug.Log(startGame.gamesPlayed);
-      if(startGame.lives < -1) //if out of lives load end screne
+      Debug.Log(StartGame.gamesPlayed);
+      if(StartGame.lives < -1) //if out of lives load end screne
       {
         SceneManager.LoadScene(countGames);//load end scene
         return;
       }
 
-      if(startGame.gamesPlayed >= countGames-1) //if all games are played
+      if(StartGame.gamesPlayed >= countGames-1) //if all games are played
       {
         SceneManager.LoadScene(countGames); //load end scene
         Debug.Log("game");
@@ -40,31 +36,18 @@ namespace gameLogic
       int scene = scene = Random.Range(1, countGames);;
       while(flag){
         scene = Random.Range(1, countGames);
-        while(startGame.gameStates[scene] == 0){
-          if(startGame.lifeFlag == 1){
-            --startGame.lives;
-            win = false;
-            startGame.lifeFlag = 0;
-          }else{
-            win = true;
+        while(StartGame.gameStates[scene] == 0){
+          if(StartGame.lifeFlag == 1){
+            --StartGame.lives;
+            StartGame.lifeFlag = 0;
           }
-          startGame.gamesPlayed++; //increment number of games played
-          startGame.gameStates[scene] = 1;
+          StartGame.gamesPlayed++; //increment number of games played
+          StartGame.gameStates[scene] = 1;
           flag = false;
           break;
         }
-     
       }
-      //transition_win.SetTrigger("gameWon");
-      //StartCoroutine(LoadLevel());
-      SceneManager.LoadScene(scene);
-    }
-
-
-    IEnumerator LoadLevel()
-    {
-        yield return new WaitForSeconds(transTime);
-        //SceneManager.LoadScene(index);
+      SceneManager.LoadScene(scene); //load random scene
     }
 
     private void EndGame()

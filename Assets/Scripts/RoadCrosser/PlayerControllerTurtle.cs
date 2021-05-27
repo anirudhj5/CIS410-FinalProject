@@ -15,13 +15,13 @@ namespace gameLogic
       public CharacterController controller;
       public GameObject player;
       public int countGames = 4;
-      randomSceneLoader randomSceneLoader;
+      RandomSceneLoader RandomSceneLoader;
 
       void Awake()
       {
         Debug.Log("Turtle");
         controller = GetComponent<CharacterController>();
-        randomSceneLoader = gameObject.AddComponent<randomSceneLoader>();
+        RandomSceneLoader = gameObject.AddComponent<RandomSceneLoader>();
       }
 
       void Update()
@@ -39,8 +39,8 @@ namespace gameLogic
 
         if(transform.position.y > 21) //if player crossed road
         {
-          startGame.lifeFlag = 0;
-          randomSceneLoader.LoadRandomScene(); //load random scene
+          StartGame.lifeFlag = 0;
+          RandomSceneLoader.LoadRandomScene(); //load random scene
         }
 
       }

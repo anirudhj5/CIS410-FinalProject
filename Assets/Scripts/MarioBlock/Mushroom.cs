@@ -16,7 +16,7 @@ public class Mushroom : MonoBehaviour
       }
       rb = this.GetComponent<Rigidbody>();
 
-      rb.velocity = new Vector3((direction * 8f),  0f, 0f); //set car with random speed
+      rb.velocity = new Vector3((direction * 8f),  0f, 0f); //set mushroom with speed
     }
 
     // Update is called once per frame
