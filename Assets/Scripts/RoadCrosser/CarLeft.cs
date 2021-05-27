@@ -2,20 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarLeft : MonoBehaviour
+namespace gameLogic
 {
-  private Rigidbody rb;
-
-  void Start()
+  public class CarLeft : MonoBehaviour
   {
-    rb = this.GetComponent<Rigidbody>();
-    rb.velocity = new Vector3(Random.Range(10f, 16f),  0f, 0f); //set car with random speed
-  }
+    private Rigidbody rb;
+    public float speed;
 
-  void Update()
-  {
-    if(transform.position.x > 40 ){ //if car offscreen
-      Destroy(this.gameObject); //Destroy
+    void Start()
+    {
+      speed = 10 * StartGame.gameSpeed;
+      rb = this.GetComponent<Rigidbody>();
+      rb.velocity = new Vector3(Random.Range(speed, (speed+6)),  0f, 0f); //set car with random speed
+    }
+
+    void Update()
+    {
+      if(transform.position.x > 40 ){ //if car offscreen
+        Destroy(this.gameObject); //Destroy
+      }
     }
   }
 }

@@ -24,7 +24,7 @@ namespace gameLogic
       RandomSceneLoader RandomSceneLoader;
       public GameObject block_stop;
       private float jumpHeight = 2.6f;
-      private float gravityValue = -100.81f;
+      private float gravityValue = -100.81f * StartGame.gameSpeed;
       private int jumpCount = 0;
       bool groundedPlayer = true;
 
@@ -33,19 +33,22 @@ namespace gameLogic
         controller = GetComponent<CharacterController>();
         RandomSceneLoader = gameObject.AddComponent<RandomSceneLoader>();
         rb = this.GetComponent<Rigidbody>();
+        rb.mass = rb.mass * StartGame.gameSpeed;
         block_stop.SetActive(false);
+        speed = 12 * StartGame.gameSpeed;
+        jumpPower = 15 * StartGame.gameSpeed;
       }
 
       // Update is called once per frame
       void Update()
       {
 
-
+        //if ground and not moving up or down
         if (groundedPlayer && playerVelocity.y < 0)
         {
             playerVelocity.y = 0f;
-            animator.SetBool("isJumping", false);
-            jumpCount = 0;
+            animator.SetBool("isJumping", false); //stop jump animation
+            jumpCount = 0; //reset jump count
         }
 
         Vector2 move = wasd.ReadValue<Vector2>();
@@ -54,9 +57,9 @@ namespace gameLogic
         {
           StartCoroutine(HideText());
         }
-        animator.SetFloat("Speed", Mathf.Abs(move.x));
+        animator.SetFloat("Speed", Mathf.Abs(move.x)); //set animator speed to trigger walk animation
 
-        if(Keyboard.current.spaceKey.wasPressedThisFrame && jumpCount < 2){ //if d is pressed and facing left
+        if(Keyboard.current.spaceKey.wasPressedThisFrame && jumpCount < 2){ //if space is pressed and havent doubble jumped
   	      animator.SetBool("isJumping", true);
           playerVelocity.y = 0f;
           groundedPlayer = false;
@@ -65,7 +68,8 @@ namespace gameLogic
   	    }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
-        controller.Move(playerVelocity * Time.deltaTime);
+        controller.Move(playerVelocity * Time.deltaTime); //move up/down
+        controller.Move(move * Time.deltaTime * speed); //move left/right
 
         if(Keyboard.current.aKey.wasPressedThisFrame && rotateFlag){ //if d is pressed and facing left
   	      rb.transform.Rotate(new Vector3(0f, 180f, 0f)); //face right
@@ -75,15 +79,13 @@ namespace gameLogic
   	      rb.transform.Rotate(new Vector3(0f, 180f, 0f)); //face left
   				rotateFlag = true; //if false player facing left
   	    }
-        controller.Move(move * Time.deltaTime * speed);
 
-
-        if(rb.transform.position.x < -37)
+        if(rb.transform.position.x < -37) //if off left side screen put on right side
         {
           temp = new Vector3(74.0f,0f,0f);
           player.transform.position += temp;
         }
-        else if (rb.transform.position.x > 37){
+        else if (rb.transform.position.x > 37){ //if off right side screen put on temp side
           temp = new Vector3(-74.0f,0f,0f);
           player.transform.position += temp;
         }
@@ -91,22 +93,21 @@ namespace gameLogic
 
       private void OnTriggerEnter(Collider other)
       {
-        if (other.gameObject.name == "Ground Trigger")
+        if (other.gameObject.name == "Ground Trigger") //if hits ground
         {
           groundedPlayer = true;
-          Debug.Log("ground");
         }
 
         if (other.gameObject.name == "Mushroom Trigger")
         {
-          animator.SetTrigger("Mushroom");
-          animator.SetBool("isBig", true);
+          animator.SetTrigger("Mushroom"); //play mushroom animation
+          animator.SetBool("isBig", true); //set large state
           block_stop.SetActive(true);
-          StartCoroutine(Wait());
+          StartCoroutine(End()); //end
         }
       }
 
-      IEnumerator Wait()
+      IEnumerator End()
       {
         yield return new WaitForSeconds(2f);
         StartGame.lifeFlag = 0;

@@ -33,12 +33,11 @@ namespace gameLogic
     {
       if(other.gameObject.name == "Asteroid(Clone)")
       {
-        Debug.Log("hit");
         if(oneFlag == 1)
         {
         oneFlag = 0;
-        animator.SetTrigger("Explode");
-        StartCoroutine(Wait());
+        animator.SetTrigger("Explode"); //explode animation
+        StartCoroutine(End()); //end game
         }
       }
     }
@@ -49,7 +48,7 @@ namespace gameLogic
       instrText.SetActive(false);
     }
 
-    IEnumerator Wait()
+    IEnumerator End()
     {
       yield return new WaitForSeconds(.8f);
       StartGame.lifeFlag = 1;

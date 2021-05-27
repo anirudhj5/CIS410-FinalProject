@@ -22,6 +22,7 @@ namespace gameLogic
         Debug.Log("Turtle");
         controller = GetComponent<CharacterController>();
         RandomSceneLoader = gameObject.AddComponent<RandomSceneLoader>();
+        speed = 5.5f * StartGame.gameSpeed;
       }
 
       void Update()

@@ -18,30 +18,22 @@ public class BlockCollision : MonoBehaviour
       block_mushroom.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void OnTriggerEnter(Collider other)
     {
       if(count == 1)
       {
-        Debug.Log("block");
-
-
-        StartCoroutine(BlockMove());
+        StartCoroutine(BlockMove()); //start block move animation
       }
       count++;
     }
 
-
+    //pretty awful block move code
     IEnumerator BlockMove()
     {
+
+        //move block up
         float timeElapsed = 0;
         endPos = (rb.transform.position + new Vector3 (0, 1f, 0));
-
         while (timeElapsed < .3f)
         {
             rb.transform.position = Vector3.Lerp(rb.transform.position, endPos, timeElapsed / .3f);
@@ -49,8 +41,9 @@ public class BlockCollision : MonoBehaviour
 
             yield return null;
         }
-
         rb.transform.position = endPos;
+
+        //move block down
         timeElapsed = 0;
         endPos = (rb.transform.position + new Vector3 (0, -1.2f, 0));
 
@@ -61,8 +54,9 @@ public class BlockCollision : MonoBehaviour
 
             yield return null;
         }
-
         rb.transform.position = endPos;
+
+        //move up back to original pos
         timeElapsed = 0;
         endPos = (rb.transform.position + new Vector3 (0, .2f, 0));
 
@@ -73,25 +67,25 @@ public class BlockCollision : MonoBehaviour
 
             yield return null;
         }
-
-        block_start.SetActive(false);
-        block_done.SetActive(true);
-
-
         rb.transform.position = endPos;
 
 
+        //change to none special block
+        block_start.SetActive(false);
+        block_done.SetActive(true);
+
+        //spawn mushroom
         rb = block_mushroom.GetComponent<Rigidbody>();
         timeElapsed = 0;
         endPos = (rb.transform.position + new Vector3 (0, 3.2f, 0));
 
-        while (timeElapsed < 1f)
+        while (timeElapsed < 5f)
         {
             block_mushroom.SetActive(true);
-            rb.transform.position = Vector3.Lerp(rb.transform.position, endPos, timeElapsed / 1f);
+            rb.transform.position = Vector3.Lerp(rb.transform.position, endPos, timeElapsed / 5f);
             timeElapsed += Time.deltaTime;
             yield return null;
-            if(timeElapsed > .3f)
+            if(rb.transform.position.y > endPos.y-.05f)
             {
               block_mushroom.SetActive(false);
               GameObject Mush = Instantiate(Mushroom) as GameObject;
@@ -99,8 +93,4 @@ public class BlockCollision : MonoBehaviour
             }
         }
       }
-
-
-
-
 }
