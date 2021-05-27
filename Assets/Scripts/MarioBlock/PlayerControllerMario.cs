@@ -37,6 +37,7 @@ namespace gameLogic
         block_stop.SetActive(false);
         speed = 12 * StartGame.gameSpeed;
         jumpPower = 15 * StartGame.gameSpeed;
+        StartGame.lifeFlag = 1;
       }
 
       // Update is called once per frame
@@ -103,6 +104,7 @@ namespace gameLogic
           animator.SetTrigger("Mushroom"); //play mushroom animation
           animator.SetBool("isBig", true); //set large state
           block_stop.SetActive(true);
+          StartGame.lifeFlag = 0;
           StartCoroutine(End()); //end
         }
       }
@@ -110,7 +112,6 @@ namespace gameLogic
       IEnumerator End()
       {
         yield return new WaitForSeconds(2f);
-        StartGame.lifeFlag = 0;
         RandomSceneLoader.LoadRandomScene();
       }
 

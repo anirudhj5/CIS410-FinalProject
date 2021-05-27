@@ -9,7 +9,7 @@ namespace gameLogic{
       public TextMeshProUGUI scoreText;
       void Start()
       {
-        scoreText.text =  "" + (StartGame.score); //set score in UI
+        scoreText.text =  "" + (StartGame.score.ToString().PadLeft(6, '0')); //set score in UI
       }
 
   }

@@ -15,6 +15,7 @@ namespace gameLogic
     public static int lifeFlag;
     public static int score;
     public static int highScore;
+    private string highscoreStr;
     public TextMeshProUGUI highscoreText;
     private int countGames;
 
@@ -27,7 +28,7 @@ namespace gameLogic
       lives = 3; //lives
       gamesPlayed = 1; //gamesPlayed handled by LoadRandomScene()
       countGames = SceneManager.sceneCountInBuildSettings -1;
-      highscoreText.text =  "Highscore: " + (StartGame.highScore);
+      highscoreText.text =  "Highscore \n \n" + (StartGame.highScore.ToString().PadLeft(6, '0'));
 
       //loop through and set all games to unplayed
       for(int i = 0; i < countGames; i++){

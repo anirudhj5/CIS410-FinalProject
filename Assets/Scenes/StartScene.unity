@@ -963,7 +963,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Highscore: 0'
+  m_text: 'Highscore
+
+
+    999999'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a60aa0dae1575014dba19d3ca0da7ddb, type: 2}
   m_sharedMaterial: {fileID: -6132197352977027472, guid: a60aa0dae1575014dba19d3ca0da7ddb, type: 2}
@@ -997,7 +1000,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1056,7 +1059,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -15, y: -11.073486}
+  m_AnchoredPosition: {x: 0, y: -11.073486}
   m_SizeDelta: {x: 500, y: 38.9265}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &1502145111
