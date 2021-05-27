@@ -60,7 +60,7 @@ namespace gameLogic
 
 		IEnumerator Laser_Cooldown()
 		{
-			 yield return new WaitForSeconds(1);
+			 yield return new WaitForSeconds(.4f);
 			 fire = true;
 			 Debug.Log("fire recharge");
 		}

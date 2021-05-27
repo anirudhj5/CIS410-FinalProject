@@ -102,8 +102,15 @@ namespace gameLogic
           animator.SetTrigger("Mushroom");
           animator.SetBool("isBig", true);
           block_stop.SetActive(true);
-          StartGame.lifeFlag = 0;
+          StartCoroutine(Wait());
         }
+      }
+
+      IEnumerator Wait()
+      {
+        yield return new WaitForSeconds(2f);
+        StartGame.lifeFlag = 0;
+        RandomSceneLoader.LoadRandomScene();
       }
 
       IEnumerator HideText()

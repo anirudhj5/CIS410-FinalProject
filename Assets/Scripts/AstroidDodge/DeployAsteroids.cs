@@ -9,7 +9,7 @@ public class DeployAsteroids : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        respawnTime = .2f;
+        respawnTime = .05f;
         StartCoroutine(asteroidWave()); //start spawn asteroids
     }
 

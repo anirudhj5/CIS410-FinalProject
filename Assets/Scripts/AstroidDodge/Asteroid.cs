@@ -14,7 +14,7 @@ public class Asteroid : MonoBehaviour
       rb.velocity = new Vector3(0f,  Random.Range(-25f, -45f), 0f); //add random velocity to asteroid
 
       rb.transform.Rotate(new Vector3(0f, 0f, Random.Range(-360f, 360f))); //rotate asteroid randomly
-      rb.transform.localScale *= Random.Range(.7f, 1f); //random size of asteroid
+      rb.transform.localScale *= Random.Range(.25f, .5f); //random size of asteroid
 
     }
 
